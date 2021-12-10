@@ -51,6 +51,7 @@ const preguntas = [
 ];
 
 
+
 const InquirerMenu= async () => {
 
     console.clear();
@@ -101,11 +102,27 @@ const leerInput = async (message) => {
 
 
 
+
+    const listadoTareasBorrar = async (tareas = [])=>{ // its dont working this function
+
+        const choices = tareas.map(tarea=>{
+            
+            return { 
+                mjs: 'hola'
+            }
+        });
+
+        console.log(choices);
+
+    }
+
+
 }
 
 module.exports ={
     InquirerMenu,
     pausa,
-    leerInput
+    leerInput,
+   // listadoTareasBorrar
 } 
 

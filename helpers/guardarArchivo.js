@@ -1,4 +1,6 @@
-const fs = require('fs');
+const fs = require('fs'); 
+
+ 
 
 
 const archivo ='./db/data.json';
@@ -15,7 +17,7 @@ const leerDB = () => {
         const info = fs.readFileSync(archivo,{encoding: 'utf8'});
         const data = JSON.parse(info); // parsiar el archivo para que regrese el array
         //console.log(data);
-        return null;
+        return data;
         // funcion leer el archivo 
 
 }
