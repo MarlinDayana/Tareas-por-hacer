@@ -31,7 +31,7 @@ const preguntas = [
 
             {
                 value: '5',
-                name: `${'5.'.red} Editar Tarea(s)`
+                name: `${'5.'.red} Completar Tarea(s)`
             },
 
             {
@@ -100,29 +100,100 @@ const leerInput = async (message) => {
     const {desc} = await inquirer.prompt(question);
     return desc;
 
-
+}
 
 
     const listadoTareasBorrar = async (tareas = [])=>{ // its dont working this function
 
-        const choices = tareas.map(tarea=>{
+        const choices = tareas.map((tarea, i) =>{
+
+            const idx = `${i+1}`.green;
             
             return { 
-                mjs: 'hola'
+                value: tarea.id, 
+                name: `${idx} ${tarea.desc}`
             }
         });
+        //console.log(choices)
 
-        console.log(choices);
+        choices.unshift({
+            value:'0',
+            name: '0.'.green + 'cancelar'
+        });
+
+        const pregunta=[
+            {
+                type: 'list',
+                name: 'id',
+                message: 'Borrar',
+                choices
+            }
+        ]
+    
+        const {id} =  await inquirer.prompt(pregunta);
+        return id;
+
+        
+
+               
+
+    }
+    
+
+    const confirmar = async (message)=>{
+
+        const question =[
+            {
+                type: 'confirm', 
+                name: 'ok',
+                message
+            }
+        ];
+        
+    const {ok} =  await inquirer.prompt(question);
+    return ok;
+    }
+
+    const MostrarListadoChecklist = async (tareas = [])=>{ // its dont working this function
+
+        const choices = tareas.map((tarea, i) =>{
+
+            const idx = `${i+1}`.green;
+            
+            return { 
+                value: tarea.id, 
+                name: `${idx} ${tarea.desc}`,
+                checked: (tarea.completadoEn) ?true : false
+            }
+        });
+        //console.log(choices)
+
+        const pregunta=[
+            {
+                type: 'checkbox',
+                name: 'ids',
+                message: 'Selecciones',
+                choices
+            }
+        ]
+    
+        const {ids} =  await inquirer.prompt(pregunta);
+        return ids;
+
+        
+
+               
 
     }
 
 
-}
 
 module.exports ={
     InquirerMenu,
     pausa,
     leerInput,
-   // listadoTareasBorrar
+    listadoTareasBorrar,
+    confirmar,
+    MostrarListadoChecklist
 } 
 

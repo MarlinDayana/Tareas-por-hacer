@@ -4,7 +4,10 @@ const { guardarDb, leerDB } = require('./helpers/guardarArchivo');
 const {InquirerMenu,
        pausa,
        leerInput,
-       listadoTareasBorrar
+       listadoTareasBorrar,
+       confirmar,
+       MostrarListadoChecklist
+
 } = require('./helpers/inquirer'); // desestructuracion 
 const Tarea = require('./models/tarea');
 const Tareas = require('./models/tareas');
@@ -51,12 +54,23 @@ const main = async () => {
             break;
 
             case '5':
-                  
+                  const ids = await  MostrarListadoChecklist(tareas.listadosArr);
+                  tareas.toggleCompletadas(ids);
             break;
 
             case '6':
-              // const id = listadoTareasBorrar(tareas.ListadosArr);
-              // console.log({id});   
+              const id = await listadoTareasBorrar(tareas.listadosArr);
+              if (id !== '0'){
+                  const ok = await confirmar('¿Está seguro?');
+                  if (ok) {
+                      tareas.borrarTarea(id);
+                      console.log('tarea borrada');
+                }
+
+              }
+              
+
+              //console.log({ok});   
             break;
 
            }
@@ -78,3 +92,6 @@ const main = async () => {
 
 
 main();
+
+
+// https://github.com/Klerith/node-console-app-todo/releases/tag/v0.5.0 - Aqui codigo principal en git - Revisar
